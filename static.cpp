@@ -19,8 +19,8 @@ int main() {
     Entity::y = 2;
 
     Entity e2 = Entity();
-    Entity::x = 1;
-    Entity::y = 2;
+    Entity::x = 3;
+    Entity::y = 3;
     /*
     e2.x = 3;
     e2.y = 4;

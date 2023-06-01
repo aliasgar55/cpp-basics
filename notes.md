@@ -135,6 +135,10 @@ OOPS
 5. Static method cannot access non-static variables for obvious reasons
 6. Static is used of data that we dont want to change between class instances
 7. Syntax `static int x = 10;`
+## LOCAL STATIC
+1. You can make a variable static to a local scope as well, this makes the variable
+   declared just once, and use the same instance of the variable to be used across
+   subsequest call to the scope/function.
 # ENUM
 1. Syntax 
 ```cpp
@@ -332,4 +336,155 @@ class Entity {
 }
 ```
 4. Type of this in a member function is `Entity *e` and in a const function is `const Entity *e`
-
+# OBJECTS LIFETIME
+1. A scope can be anything a function a if block etc..
+2. Stack and  Heap are 2 type of memory allocation strategy used in cpp
+3. A stack based variable is destroyed when the variable goes out of scope
+4. A very good example levaraging stack based lifetimes, are unique pointers, scoped locks etc
+# SMART POINTERS
+1. There are 3 type of smart pointer, namely unique pointers, shared pointers, weak pointers
+2. Unique pointers: Unique pointers are pointers that clears the allocated memory 
+   automatically when the pointer goes out of scope
+3. Syntax
+```cpp
+# include <memory>
+int main() {
+    // syntax 1
+    std::unique_ptr<Entity> entity = std::make_unique<Entity>();
+    // or
+    // syntax 2
+    std::uniqye_ptr<Entity> entity(new Entity());
+    // syntax 1 is better than 2 since it provides exception safety
+    } ```
+4. One cannot copy a unique pointer
+4. Unique pointers have almost no overhead, unqiue pointers cannot be shared
+   between variables, since sharing a unqiue pointer would mean that if one
+   goes out of scope and is deleted other pointer pointes to a memory thats not
+   valid
+5. Shared pointers: Shared pointers are scoped pointers that can be copied they
+   work by maintaining a ref count, each time a pointer is copied, the ref
+   count increases by 1, and when a shared pointer goes out of scope the ref
+   count is decreased by 1. The memory is freed automatically when the ref
+   count reaches zero.
+6. Shared pointer has a small over, since they matain ref count
+7. Weak pointers: Weak pointers are similar to shared pointer, but when a
+   shared pointer is gets shared with a weak pointer the ref count dosent
+   increase, which means that even if there is a weak pointer to a memory
+   address in scope, the memroy will still be freed since shared pointer ref
+   count is zero
+8. One can ask a weak pointer if its still valid or not
+# COPY AND COPY CONSTRUCTOR
+1. When you use = operator to assign a object to a variable, it leads to a copy
+   of the actual object, compiler creates a new object of the class copies the 
+   private members of the from the object to the new object
+2. Refer to [copy_constructor.cpp](../copy_constructor.cpp) for a detailed example
+# ARROW OPERATOR
+1. Arrow operator is used to access the methods and members of a pointer without  
+   derefrenceing the pointer.
+   Syntax:
+   ```cpp
+   Entity* e  = new Entity();
+   e->x;
+2. Refer to [arrow operator](../arrow.cpp) for a detailed example
+3. Code to get the offset of a variable in a memory
+# VECTORS
+1. Vectors are dynamic arrays which means, that you dont need to specify the size
+   while initializing, you can add elements as needed, and the array grown dynamically
+2. NOTE: The Elements in the array are stored as a single contingous block of memory 
+3. Remember: ALways try to pass the vector as reference to a function, else it will
+   lead to a complete copy of the vector, this is even true while using vectors in a
+   range based for loops, make sure to use ref there as well
+4. Optimizing vector class of standard library, code in [optimized vector](./vector.cpp)
+5. The way vector works, is that you start with a array, and when you add elements to this array
+   and if the size of the underlying array is not enough the another arrray is created
+   and the existing elements are copied to the new array
+6. Data inside the vectors are stored in heap, and only the metadata of the vector like
+   size etc is stored in stack
+# USING EXTERNAL LIBRARIES
+1. There are 2 ways to link external libraries in cpp using, Dynamic linking and static linking
+2. In static linking the library is put into the soruce code
+ - Static linking is techinically faster because compiler can perform optimizations
+3. Dyanmic linking, means that the library is actually linked at the runtime
+4. Lets talk about static linking.
+ - We need to get the binaries either in compiled form or in source code and complie it by ourself
+ - There are 2 major parts 2 the libary, one is the includes folder that contains the header files i.e function 
+   declaration etc, and other is the lib folder that contains the actual implementation
+ - Header files tells us what functions are available in the libaray
+ - So we need to configure the compiler to point to the header file, and configure the 
+   linker to point to the library file
+5. Dynamic linking also works very similar to the static linking, we need to add  
+   header file, but instead of specifying the lib file, we add a file that has location
+   of the functions in the actual dll file, this methods need the dll file to be needed
+   before we are able to run the program 
+   - There is also another way were, we dont need the dll file and the program can run
+     without the dll file, and when it calls a function that is defined in the dll file
+     it then needs to search the dll file for the specific function being called
+# HOW TO RETURN MULTIPLE VALUES
+1. You can return a structure from a function
+2. Other way is add the return variables as argument to the function
+3. Another way is to return a array, but here each return value needs to be of the same type 
+4. One more way is to create a tuple and return
+5. Here returning a struct is the most redable code, and taking output arguments as input is the most 
+   efficient way 
+# TEMPLATES
+1. If compared to other languages templates can be compared to generics in c# and cpp
+   but are infinitely more powerfull then generics
+2. Example of template: if there is a function that can take multiple type of parameters    
+   then we can define a template and use the template type instead.
+   `template <typename T>` and then we can use it in a function like this `void hello(T value)`
+3. The way it works is that when we define a function with a template, and the function dosent actually gets defined
+   unless we call it, so based on when we call it and how we call it, based on type the function gets created, 
+   and complied
+4. So in summary templates gives us the ability to run specific code based on what type we pass
+5. Note: The template dosent actually exists untill we call it, so if you have a syntax error in the template
+# HEAP vs STACK
+1. STACK allocations are a lot faster than help allocation
+2. Heap allocation calls new which in turn calls malloc which asks the operating system for the memory
+   and does all the book keeping going throught the freelist to find a free memory block 
+   and marking the memory as used etc, and returns  the pointer to the memory
+3. Here the performance diffrence is the allocation
+4. Always try to allocate on stack unless you cant maybe due to size of the data or lifetime
+# MACROS
+1. Syntax 
+```cpp
+#define LOG(x) std::cout << x << std:: endl
+int main() {
+    LOG("Hello")
+}
+```
+2. Macros work by replacing the macro with the actual code during the preproccessing stage in compiling
+3. Here is a example of macro used to log in debug mode while ignore it in relase mode
+```cpp
+#if PR_DEBUG == 1
+#define LOG(x) std::cout << x << std::endl
+#elif defined(PR_RELEASE)
+#define LOG(x)
+#endif
+```
+4. In the above exmple if PR_DEBUG is set to 1 then LOG(x) will print x to the terminal
+   else if PR_RELEASE is defined then LOG(x) will be replaced with nothing, this way
+   we can use macros, macros are used a lot for debug purpose, or enable or disable some stuff 
+5. We can escape a character in macro with a `\`, this way we can write macro in multiple line by escaping a new-line character
+# AUTO keyword
+1. Auto keyword is used to automatically deduce type of a variable at compile time 
+2. `auto x = "hello";` Here the type of x will be const char*
+3. we should use auto judiciosly since in can make your code hard to understand and reason
+# Standard array std::array
+1. Std array in cpp is just a simple c style array with a size attached to it
+2. Syntax 
+```cpp
+std::array<int, 5> a;
+a[1] = 1
+```
+3. Here int is the datatype we need to store, and 5 is the size
+4. We should use, std array instead of c style array since it has no overhead, 
+   it performs bound checking in debug mode, and can we used with iterators, also
+   the size variable is not stored since its a template argument, so no extra memory is required
+5. Also the variables are stored on stack as opposed to heap in vectors
+# INTRO to functional pointers
+1. Functional pointers are a technique in which variables can be assigned to functions
+   and the variables can be used to call the actual functions
+2. functional pointers are pointers to the actual location of the function in the binary
+3. An example of functional pointers can be found in [functional_pointers.cpp](./funcional_pointers.cpp)
+# LAMBDAS
+1. 

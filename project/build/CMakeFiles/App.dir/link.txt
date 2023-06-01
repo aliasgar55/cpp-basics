@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/App.dir/main.cpp.o -o App  glfw/src/libglfw3.a -Wl,-Bstatic -lrt -Wl,-Bdynamic -lm -ldl -lX11 
