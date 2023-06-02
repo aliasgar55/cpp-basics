@@ -487,4 +487,12 @@ a[1] = 1
 2. functional pointers are pointers to the actual location of the function in the binary
 3. An example of functional pointers can be found in [functional_pointers.cpp](./funcional_pointers.cpp)
 # LAMBDAS
-1. 
+1. Whenever we have function pointer we can used lambd:w
+2. Sytanx: `[]() specifier {}`
+3. The [] brakets specifies the capture group, if yout want to pass
+   external variables to the lambda fuction you can specify the capture speicifies 
+   how to pass the external variables, either by reference [&] or by values [=]
+4. The () specified the arguments that will be passed to the function 
+5. {} specified the body of the function
+6. NOTE: You can also specify a specifier between arguments list and body, if we want
+   to modify the vairables that are captured by values
