@@ -335,7 +335,7 @@ class Entity {
         }
 }
 ```
-4. Type of this in a member function is `Entity *e` and in a const function is `const Entity *e`
+4. Type of `this` in a member function is `Entity *e` and in a const function is `const Entity *e`
 # OBJECTS LIFETIME
 1. A scope can be anything a function a if block etc..
 2. Stack and  Heap are 2 type of memory allocation strategy used in cpp
@@ -496,3 +496,140 @@ a[1] = 1
 5. {} specified the body of the function
 6. NOTE: You can also specify a specifier between arguments list and body, if we want
    to modify the vairables that are captured by values
+# NAMESPACES 
+1. Namespace in cpp is used to avoid naming conflicts between symbols for example
+   if we have 2 print function with the same signature then, we would not know which 
+   function to call, to solve this issue we can wrap the function with a namespace 
+   and call the function thats required based on the namespace specified
+2. Syntax: 
+```cpp
+namespace apple {
+    void print() {}
+    }
+
+int main() {
+    apple::print();
+    }
+
+```
+3. We can access a namespace symbol using `::` oprator, we can nest namespace as well
+4. We should try to avoid `using namespace std` as it can lead to less redable code, and symbol conflict:w
+5. Never ever add using name in header file
+6. We can add alisa to namespaces using `namespace a = apple`, there are many other ways of reducing the 
+   code when using namespaces like `using` etc
+# THREADING
+1. Threads in cpp can be used to distribute the work between multiple threads 
+2. Example of threading in [threads.cpp](./threads.cpp)
+# MULTI-DIMENSIONAL Array
+1. MULTI-DIMENSIONAL arrays are nothing but arrays or arrays
+2. [[], [], []] Here is a example of a 2d array
+3. Here the outermost array contain pointer to the arrays where actual data is sotred
+4. Here we are working with heap allocation and not with stack allocation
+5. One way to speed up the program is to allocate the array as a single block, that is in 1 dimension
+6. Checkout [2darray.cpp](./2darrays.cpp) for example
+# TYPE PUNNING
+1. Notes comming soon....
+# VIRTUAL DESTRUCTORS
+1. virtual destructors are similar to destructor but, Let me explain with a example, If there is class base 
+   and a class derived which inherits base if you create a new object of type derived everything works as
+   expected, but when you create a class of type base and create it using the derived class, the vairable or memory 
+   when freed dosent call the destructor of the base class, inorder to make it work, we need to mark the destructor of the 
+   base class as virtual.
+2. In short if we want to make your class safe for use that will be inherited, its a good idea to 
+   make the destructor function as a virtual function, we have a example for it at virtual_destructor.cpp
+# CASTING
+0. Casting in cpp is can be of 2 types, cpp style casting and c style casting
+1. Casting means converting a type in cpp to another type
+2. Types of casting in cpp
+ - Static cast `<static_case>(int)`
+ - Convert a type statically
+ - Reinterpret cast `<reinterpret_cast>`
+ - Used for type punning, i want to take a pointer a reinterpret as a different value
+ - Dynamic cast `<dynamic_cast>`
+ - This cast is used to convert a value dynamically, this can give null if the type conversion is successfull, this does a runtime check
+ - Const cast `<const_cast>`
+ - Removing a const or adding a const
+3. Dynamic cast: This is a cast introduced in cpp, it works by adding a check during the runtime, that if we can convert a 
+   given type to another, it works by storing the type information in a table called RTTI(Run time type information)
+4. If the type cannot be converted it returns a null, this adds some overhead to the code execution
+5. We can also use it to determine if a given variable is of a given type, similar to `type()` in js or `isinstance()` in cpp
+
+
+# PRE-COMPILED HEADERS
+1. Pre-compiled headers are headers that have been already compiled, and the program uses the precompiled headers
+2. This helps speed up the compile times a lot, since header files are very large, and each translation unit including it
+   this makes, the compilation a lot slower 
+3. Instead we can include all the commanly used headers into a header file and then compile that header and use that instead
+
+# STRUCTURED BINDING   
+1. Structured bindings are a way to help you return multiple values from a function
+2. Instead of finding ways around, we can return a tuple from the function and use structured binding to 
+   bind a variable(with a name) to each of the return value
+3. Example:
+```cpp
+#include<iostream>
+#include<tuple>
+#include<string>
+
+std::tuple<std::string, int> CreatePerson() {
+    return {"John Doe", 25};
+}
+int main() {
+    auto[name, age] = CreatePerson();
+    std::cout << name << "," << age;
+}    return {"John Doe", 25};
+```
+4. Note: The feature is only avilable for c++17 and above.
+# OPTIONAL,VARIANT & ANY TYPE 
+1. Optional type: as the name suggest lets you return a value, if it exists, 
+   else you wont need to return a value, since its optinal
+2. We have a example of optional type in [optional_type.cpp](./optional_type.cpp) 
+3. These types were introduced in c++17
+4. Variant type, and any type are different types that were introduced in c++17
+5. TODO: Add vairiant example
+6. TODO: Compare variant and unions
+7. TODO: Usage of variants compared to Optional
+8. We can store any data type using void pointer but std::any is cpp 17 way, and is more safe
+
+#  std::async
+1. std async is the standard library in cpp that helps us to tasks on different threads
+2. There is a example of this in [async.cpp](./async.cpp)
+
+# OPTIMIZATIONS
+1. Strings:
+ - Strings are a great place to optimize, strings are bad because each string operation
+   allocates memory, which is slow, to avoid that we can use string_view instead since it 
+   gives us a view into the orignal string without having to make copy of that each time 
+ - string_view works like this, it gives us a window into the existing string, you give it
+   a pointer and the lenght, and in this way we can read the string without copying the data
+```cpp
+ std::string Name = "Hello";
+ std::string_view firstLetter(Name, 1) // firstLetter = H
+```
+ - 
+
+2. Small string optimization
+ - In cpp std library, if a string is less than a given length, it is not allocated on heap
+   instead cpp optimizes it, to be allocated on stack, the lenght of the small string can
+   change based on the std library used, but generally its 15, so any string thats less then 15 char
+   it allocated in a buffer, thats a small optimization added to the cpp std lib
+   NOTE: This only works in release mode
+
+
+# SINGELTONS
+1. Singeltons are useful when we need just one instance of a class, like a renderer
+2. We can create a singelton class in cpp, by some hacks, like making the constructor private,
+   delete the copy constructor, creating a static instance variable and a static get method, to access it
+3. We have a singelton example [singelton.cpp](./singelton.cpp) 
+# L values and R values
+1. Comming soon....
+# Argument evalution order
+```cpp
+int value = 0;
+def sum(value++, value++) {};
+```
+1. The above code in cpp can lead to undefined and unpredictable behaviour, because in 
+   cpp there is no rule on the order of how the function arguments are evaluted
+   the function can have 0, 1 or 1, 0 or 0, 0 in the argument list
+2. The compiler can evaluate these expressions in parallel
+

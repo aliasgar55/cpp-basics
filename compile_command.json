@@ -1,0 +1,27 @@
+[
+  {
+    "directory": "/",
+    "command": "clang++ -std=c++11 -Iinclude -c src/main.cpp",
+    "file": "src/main.cpp"
+  },
+  {
+    "directory": "/",
+    "command": "clang++ -std=c++11 -Iinclude -c src/utils.cpp",
+    "file": "src/utils.cpp"
+  },
+  {
+    "directory": "/",
+    "command": "clang++ -std=c++11 -Iinclude -c src/math.cpp",
+    "file": "src/math.cpp"
+  },
+  {
+    "directory": "/",
+    "command": "clang++ -std=c++11 -Iinclude -c src/io.cpp",
+    "file": "src/io.cpp"
+  },
+  {
+    "directory": "/",
+    "command": "clang++ -std=c++11 -Iinclude -c src/main.cpp",
+    "file": "src/main.cpp"
+  }
+]
