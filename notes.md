@@ -633,3 +633,11 @@ def sum(value++, value++) {};
    the function can have 0, 1 or 1, 0 or 0, 0 in the argument list
 2. The compiler can evaluate these expressions in parallel
 
+# MOVE SEMATICS
+1. Moving is a way to move the data from one variable to another without coping the data from one variable to another
+2. This can be said as a optimization step, since copying data is a expensive task
+3. We can create a construct with a rvalue reference to move the object, r values are temprory in nature, so it 
+   makes sense to move the value, you will find a example of move semantics in [move_semantics.cpp](./move_semantics.cpp)
+4. You can make a l-value move by casting it into a r-value ref or using std::move, this will call the move constructor 
+   or the move function that for the overload
+# ITERATORS
