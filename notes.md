@@ -1,5 +1,5 @@
 # TIPS
-1. Main function is a special function it return 0 if you dont return anythin
+1. Main function is a special function it return 0 if you dont return anything
 2. TIP: Think of operators as function
 3. Each file of cpp is converted to and .obj file and linker bundels all these files into a excutable binary (linker job is to resolve symbols)
 4. Statments that starts with # are preporcessor statments
@@ -17,8 +17,14 @@
    so we have to use 1 byte. We can do some tricks to store 8 bools in 1 byte
 7. sizeof operator prints the size of the variable
 # FUNCTIONS 
-1. Syntax <return  type> <function name>([arguments]...) {[body]}
-2. calling a function syntax: <function name>([arguments]...)
+1. Syntax
+```
+    <return  type> <function name>([arguments]...) {[body]}
+```
+2. calling a function syntax:
+```
+<function name>([arguments]...)
+```
 3. The primary point of function is to prevent duplication of code
 # HEADER FILES
 1. Header files are mostly used for declaration, so that one can get access to
@@ -39,7 +45,8 @@ else {}
    code instructions at assembly level 
 3. There is no else if in cpp, its justs a syntax sugar and behind the hood its
    actually if and else 
-4. If you want to write really fast code, try to avoid if else conditions # FOR LOOPS AND WHILE LOOPS
+4. If you want to write really fast code, try to avoid if else conditions
+# FOR LOOPS AND WHILE LOOPS
 1. There are 3 type of loops for loop, while loop and do while loops
 2. These loops are used to perform a action multiple times based on some condition
 3. Syntax for loops are 
@@ -183,7 +190,7 @@ class Player : public Entity {}
    This is because Player class will always have everything entity has, this pheonamena is called polymorphism
 # VIRTUAL FUNCTIONS
 0. Virtual function allow us to override methods in base class
-1. Please refer to virtual_function.cpp for example 
+1. Please refer to [virtual_function](./virtual_function.cpp) for example
 2. Note: Virtual functions are not free, there is a performance penelty associated with virtual functions
    firstly there is need for extra memory, to store the v_table and a pointer to the v table is stored in the base class,
    and every time we call a virtual function we have to go through the v_table to determine which function to call, so there is a 
