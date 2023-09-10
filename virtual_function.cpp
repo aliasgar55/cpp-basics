@@ -6,11 +6,14 @@
 //
 class Entity {
     public:
+        // cannot override 
         std::string GetName() { return "Entity"; }
 
+        // this can be overriden, but not required
         virtual std::string GetName1() { return "Entity"; }
-        // pure virtual function
-        
+
+        // pure virtual function, this makes the call abstract, 
+        // meaning that we cannot create a instance of the class
         virtual std::string PureVirtualExample() = 0;
 };
 
@@ -37,7 +40,7 @@ class Player : public Entity {
 
 void PrintName(Entity* e) {
 
-    std::cout << "None virtual function: " << e->GetName() << std::endl;
+    std::cout << "function from entity: " << e->GetName() << std::endl;
 
     std::cout << "Virtual function: " << e->GetName1() << std::endl;
 
@@ -48,10 +51,12 @@ int main() {
 
     Player* p = new Player("Joan");
 
-    // to explain this is a more better way lets create a function 
-    // that takes a entity and print name
     PrintName(p);
+    // output:
+    // function from entity: Entity
+    // Virtual function: Joan
+    // pure virtual function: Joan
 
-    // to fix the above problem we can mark the function as virtual
+
 }
 

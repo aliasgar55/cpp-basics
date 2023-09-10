@@ -201,7 +201,8 @@ class Player : public Entity {}
 1. This is similar to abstract method or interface in java or c-sharp
 2. Syntax for pure virtual function is `vitual int function_name() = 0;`
 3. You cant create an instance of a class that has a pure virtual function
-4. A pure virtual function is a function that dosent have a body, body of this function is defined in a function inheriting it
+4. A pure virtual function is a function that dosent have a body, body of this function is defined in a the class inheriting it
+5. Adding a pure virtual function to a class will also make it abstract
 # VISIBLITY
 1. visiblity is used to restrict the access of members and methods of a class by other code
 2. there are 3 types of visiblity in c++, private, protected, and public
@@ -246,7 +247,9 @@ class Player : public Entity {}
    on both the places(tip: here the position of const is relative to * symbol)
 7. const with methods: if const is added to a method in a class like `int get_x() const {}`(on the right side of the method name) this means
    that the method is not going to modify the class it will just read the contents of the class 
+8. This looks a bit incomplete
 # MUTABLE
+0. This is very badly structured
 * Mutable with const
  1. If mutable keyword is added before a variable, this gived the const class methods to modify
     this variable
@@ -276,7 +279,7 @@ class Entity {
     Entity(): m_name("default") { }
     Entity(std::string Name): m_name(Name) { }
 ```
-2. In the above example m_Name will be initialized to Default, any values supplied by user
+2. In the above example m_Name will be initialized to Default, or any values supplied by user
 3. The benefit of the member initializer list is not just limited to, better syntax and clean constructor,
    but also have performace advantage if a member variable is not listed in the initializer list, then its 
    initialized 2 times, once were its declared, and once in the constructor, if 
@@ -323,13 +326,14 @@ int operator+(int a) {
     }
 ```
 4. Note: Operator overloading is just like writing a function, and just because 
-   you can overload a operator dont do it unless it makes perfect sense and the operator
+   you can overload a operator dosent mean you should do it, don't do it unless it makes perfect sense and the operator
    is very intutive to use, because this can make your code harder to understand and reason about
 # THIS KEYWORD
 1. `this` is a keyword in cpp that is used to reference the instance of the class inside the class method 
     or member function
 2. the keyword becomes useful for example if you want to call a function outside of the class and that function 
-   takes the refrence of the class as a argument then you can pass *this and call the function
+   takes the reference of the class as a argument then you can pass *this and call the function
+   TODO: See if you can bypass the visiblity using the above method
 3. Below is another example, of this being used in constructor
 ```cpp
 class Entity {
@@ -361,30 +365,33 @@ int main() {
     // or
     // syntax 2
     std::uniqye_ptr<Entity> entity(new Entity());
+    // TODO: Explain how
     // syntax 1 is better than 2 since it provides exception safety
-    } ```
+    } 
+```
 4. One cannot copy a unique pointer
-4. Unique pointers have almost no overhead, unqiue pointers cannot be shared
+5. Unique pointers have almost no overhead, unqiue pointers cannot be shared
    between variables, since sharing a unqiue pointer would mean that if one
    goes out of scope and is deleted other pointer pointes to a memory thats not
    valid
-5. Shared pointers: Shared pointers are scoped pointers that can be copied they
+6. Shared pointers: Shared pointers are scoped pointers that can be copied they
    work by maintaining a ref count, each time a pointer is copied, the ref
    count increases by 1, and when a shared pointer goes out of scope the ref
    count is decreased by 1. The memory is freed automatically when the ref
    count reaches zero.
-6. Shared pointer has a small over, since they matain ref count
-7. Weak pointers: Weak pointers are similar to shared pointer, but when a
+7. Shared pointer has a small over, since they maintain ref count
+8. Weak pointers: Weak pointers are similar to shared pointer, but when a
    shared pointer is gets shared with a weak pointer the ref count dosent
    increase, which means that even if there is a weak pointer to a memory
    address in scope, the memroy will still be freed since shared pointer ref
    count is zero
-8. One can ask a weak pointer if its still valid or not
+9. One can ask a weak pointer if its still valid or not
+10. TODO: Above 2 points are not very clear please re-write the same
 # COPY AND COPY CONSTRUCTOR
 1. When you use = operator to assign a object to a variable, it leads to a copy
    of the actual object, compiler creates a new object of the class copies the 
    private members of the from the object to the new object
-2. Refer to [copy_constructor.cpp](../copy_constructor.cpp) for a detailed example
+2. Refer to [copy_constructor.cpp](./copy_constructor.cpp) for a detailed example
 # ARROW OPERATOR
 1. Arrow operator is used to access the methods and members of a pointer without  
    derefrenceing the pointer.
