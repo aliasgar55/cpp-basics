@@ -395,12 +395,13 @@ int main() {
 # ARROW OPERATOR
 1. Arrow operator is used to access the methods and members of a pointer without  
    derefrenceing the pointer.
-   Syntax:
-   ```cpp
+2.   Syntax:
+```cpp
    Entity* e  = new Entity();
    e->x;
-2. Refer to [arrow operator](../arrow.cpp) for a detailed example
-3. Code to get the offset of a variable in a memory
+```
+3. Refer to [arrow operator](../arrow.cpp) for a detailed example
+4. Code to get the offset of a variable in a memory
 # VECTORS
 1. Vectors are dynamic arrays which means, that you dont need to specify the size
    while initializing, you can add elements as needed, and the array grown dynamically
@@ -421,11 +422,12 @@ int main() {
 3. Dyanmic linking, means that the library is actually linked at the runtime
 4. Lets talk about static linking.
  - We need to get the binaries either in compiled form or in source code and complie it by ourself
- - There are 2 major parts 2 the libary, one is the includes folder that contains the header files i.e function 
+ - There are 2 major parts to the libary, one is the includes folder that contains the header files i.e function 
    declaration etc, and other is the lib folder that contains the actual implementation
  - Header files tells us what functions are available in the libaray
  - So we need to configure the compiler to point to the header file, and configure the 
    linker to point to the library file
+5. TODO: Dynamic linking is a bit confusing to understand please restructure
 5. Dynamic linking also works very similar to the static linking, we need to add  
    header file, but instead of specifying the lib file, we add a file that has location
    of the functions in the actual dll file, this methods need the dll file to be needed
@@ -435,11 +437,13 @@ int main() {
      it then needs to search the dll file for the specific function being called
 # HOW TO RETURN MULTIPLE VALUES
 1. You can return a structure from a function
-2. Other way is add the return variables as argument to the function
+2. One way is add the return variables as argument to the function
 3. Another way is to return a array, but here each return value needs to be of the same type 
 4. One more way is to create a tuple and return
-5. Here returning a struct is the most redable code, and taking output arguments as input is the most 
+5. Here returning a struct is the most readble code, and taking output arguments as input is the most 
    efficient way 
+6. In output arguments as input, you pass the variables refs to the function and the function modifies those variables
+   so you can read back the updated values
 # TEMPLATES
 1. If compared to other languages templates can be compared to generics in c# and cpp
    but are infinitely more powerfull then generics
@@ -451,12 +455,13 @@ int main() {
    and complied
 4. So in summary templates gives us the ability to run specific code based on what type we pass
 5. Note: The template dosent actually exists untill we call it, so if you have a syntax error in the template
+   you wont notice it unless you call it.
 # HEAP vs STACK
 1. STACK allocations are a lot faster than help allocation
 2. Heap allocation calls new which in turn calls malloc which asks the operating system for the memory
    and does all the book keeping going throught the freelist to find a free memory block 
    and marking the memory as used etc, and returns  the pointer to the memory
-3. Here the performance diffrence is the allocation
+3. Here the performance difference is the allocation
 4. Always try to allocate on stack unless you cant maybe due to size of the data or lifetime
 # MACROS
 1. Syntax 
@@ -492,7 +497,7 @@ a[1] = 1
 ```
 3. Here int is the datatype we need to store, and 5 is the size
 4. We should use, std array instead of c style array since it has no overhead, 
-   it performs bound checking in debug mode, and can we used with iterators, also
+   it performs bound checking in debug mode, and can be used with iterators, also
    the size variable is not stored since its a template argument, so no extra memory is required
 5. Also the variables are stored on stack as opposed to heap in vectors
 # INTRO to functional pointers
@@ -500,16 +505,17 @@ a[1] = 1
    and the variables can be used to call the actual functions
 2. functional pointers are pointers to the actual location of the function in the binary
 3. An example of functional pointers can be found in [functional_pointers.cpp](./funcional_pointers.cpp)
+4. Whenever we have function pointer we can used
 # LAMBDAS
-1. Whenever we have function pointer we can used lambd:w
 2. Sytanx: `[]() specifier {}`
-3. The [] brakets specifies the capture group, if yout want to pass
+3. The [] brakets specifies the capture group, if you want to pass
    external variables to the lambda fuction you can specify the capture speicifies 
    how to pass the external variables, either by reference [&] or by values [=]
 4. The () specified the arguments that will be passed to the function 
 5. {} specified the body of the function
 6. NOTE: You can also specify a specifier between arguments list and body, if we want
    to modify the vairables that are captured by values
+7. TODO: Please elobrate 6th point
 # NAMESPACES 
 1. Namespace in cpp is used to avoid naming conflicts between symbols for example
    if we have 2 print function with the same signature then, we would not know which 
@@ -527,8 +533,8 @@ int main() {
 
 ```
 3. We can access a namespace symbol using `::` oprator, we can nest namespace as well
-4. We should try to avoid `using namespace std` as it can lead to less redable code, and symbol conflict:w
-5. Never ever add using name in header file
+4. We should try to avoid `using namespace std` as it can lead to less redable code, and symbol conflict
+5. Never ever add using name in header file TODO: Explain why
 6. We can add alisa to namespaces using `namespace a = apple`, there are many other ways of reducing the 
    code when using namespaces like `using` etc
 # THREADING
@@ -550,7 +556,7 @@ int main() {
    when freed dosent call the destructor of the base class, inorder to make it work, we need to mark the destructor of the 
    base class as virtual.
 2. In short if we want to make your class safe for use that will be inherited, its a good idea to 
-   make the destructor function as a virtual function, we have a example for it at virtual_destructor.cpp
+   make the destructor function as a virtual function, we have a example for it at [virtual_destructor.cpp](./virtual_destructor.cpp)
 # CASTING
 0. Casting in cpp is can be of 2 types, cpp style casting and c style casting
 1. Casting means converting a type in cpp to another type
